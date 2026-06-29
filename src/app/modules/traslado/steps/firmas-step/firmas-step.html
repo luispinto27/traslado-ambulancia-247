@@ -1,0 +1,43 @@
+<h2 class="step-title" data-step-title>Firmas</h2>
+
+<div [formGroup]="group">
+  <app-firma-pad
+    label="Firma del Médico"
+    (firmaChange)="group.get('medico')?.setValue($event)">
+  </app-firma-pad>
+  <mat-error *ngIf="group.get('medico')?.hasError('required')" class="error-message">
+    La firma del médico es requerida
+  </mat-error>
+
+  <app-firma-pad
+    label="Firma de Enfermería"
+    (firmaChange)="group.get('enfermeria')?.setValue($event)">
+  </app-firma-pad>
+  <mat-error *ngIf="group.get('enfermeria')?.hasError('required')" class="error-message">
+    La firma de enfermería es requerida
+  </mat-error>
+
+  <app-firma-pad
+    label="Firma del Conductor"
+    (firmaChange)="group.get('conductor')?.setValue($event)">
+  </app-firma-pad>
+  <mat-error *ngIf="group.get('conductor')?.hasError('required')" class="error-message">
+    La firma del conductor es requerida
+  </mat-error>
+
+  <app-firma-pad
+    label="Firma del Familiar / Responsable"
+    (firmaChange)="group.get('familiar')?.setValue($event)">
+  </app-firma-pad>
+  <mat-error *ngIf="group.get('familiar')?.hasError('required')" class="error-message">
+    La firma del familiar es requerida
+  </mat-error>
+
+  <app-firma-pad
+    label="Firma de la Entidad Receptora"
+    (firmaChange)="group.get('entidadReceptora')?.setValue($event)">
+  </app-firma-pad>
+  <mat-error *ngIf="group.get('entidadReceptora')?.hasError('required')" class="error-message">
+    La firma de la entidad receptora es requerida
+  </mat-error>
+</div>

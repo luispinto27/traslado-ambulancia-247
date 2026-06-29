@@ -1,0 +1,42 @@
+<h3>Antecedentes</h3>
+
+<div [formGroup]="group">
+
+  <div class="checkbox-grid">
+
+    <mat-checkbox formControlName="acv">ACV</mat-checkbox>
+    <mat-checkbox formControlName="alergia">Alergia</mat-checkbox>
+    <mat-checkbox formControlName="artritis">Artritis</mat-checkbox>
+    <mat-checkbox formControlName="asma">Asma</mat-checkbox>
+    <mat-checkbox formControlName="cancer">Cáncer</mat-checkbox>
+
+    <mat-checkbox formControlName="cardiacos">Cardíacos</mat-checkbox>
+    <mat-checkbox formControlName="dislipidemia">Dislipidemia</mat-checkbox>
+    <mat-checkbox formControlName="epoc">EPOC</mat-checkbox>
+    <mat-checkbox formControlName="fallaRenal">Falla renal</mat-checkbox>
+    <mat-checkbox formControlName="diabetes">Diabetes</mat-checkbox>
+
+    <mat-checkbox formControlName="ginecoObstetricos">
+      Gineco-obstétricos
+    </mat-checkbox>
+    <mat-checkbox formControlName="hipertension">Hipertensión</mat-checkbox>
+    <mat-checkbox formControlName="quirurgicos">Quirúrgicos</mat-checkbox>
+    <mat-checkbox formControlName="psiquiatricos">Psiquiátricos</mat-checkbox>
+    <mat-checkbox formControlName="otros">Otros</mat-checkbox>
+
+  </div>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>DX #1 (Diagnóstico principal)</mat-label>
+    <textarea
+      matInput
+      rows="3"
+      formControlName="dxPrincipal">
+    </textarea>
+    <mat-error *ngIf="group.get('dxPrincipal')?.hasError('required')">
+      El diagnóstico principal es requerido
+    </mat-error>
+  </mat-form-field>
+
+</div>
+

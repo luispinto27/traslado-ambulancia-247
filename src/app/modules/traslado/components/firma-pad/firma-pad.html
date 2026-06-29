@@ -1,0 +1,51 @@
+<div class="firma-container">
+  <p class="firma-label">{{ label }}</p>
+
+  <!-- Mostrar imagen si fue subida -->
+  <div *ngIf="uploadedImage" class="image-preview">
+    <img [src]="uploadedImage" alt="Firma subida" />
+  </div>
+
+  <!-- Canvas para dibujar firma -->
+  <canvas
+    #canvas
+    class="firma-canvas"
+    [style.display]="uploadedImage ? 'none' : 'block'"
+    (mousedown)="startDraw($event)"
+    (mouseup)="endDraw()"
+    (mouseleave)="endDraw()"
+    (mousemove)="draw($event)"
+    (touchstart)="startDraw($event)"
+    (touchend)="endDraw()"
+    (touchmove)="draw($event)">
+  </canvas>
+
+  <!-- Input file oculto -->
+  <input
+    #fileInput
+    type="file"
+    accept="image/*"
+    (change)="onFileSelected($event)"
+    style="display: none" />
+
+  <!-- Botones -->
+  <div class="button-group">
+    <button
+      mat-stroked-button
+      color="primary"
+      type="button"
+      (click)="triggerFileInput()"
+      class="upload-btn">
+      📷 Subir Imagen
+    </button>
+
+    <button
+      mat-stroked-button
+      color="warn"
+      type="button"
+      (click)="limpiar()"
+      class="clear-btn">
+      Limpiar
+    </button>
+  </div>
+</div>

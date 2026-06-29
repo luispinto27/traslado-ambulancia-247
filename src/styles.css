@@ -1,0 +1,90 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Global Form Field Spacing */
+mat-form-field {
+  margin-bottom: 18px;
+  display: block;
+}
+
+mat-form-field.mat-form-field-appearance-outline {
+  margin-bottom: 18px;
+}
+
+/* Textarea spacing */
+textarea {
+  margin-bottom: 12px;
+}
+
+/* Checkbox spacing */
+mat-checkbox {
+  margin-bottom: 8px;
+  margin-right: 12px;
+}
+
+/* Select dropdown spacing */
+mat-select {
+  margin-bottom: 12px;
+}
+
+/* Stepper spacing */
+mat-step {
+  padding: 24px;
+}
+
+/* Fix for dialog content */
+.mat-mdc-dialog-container {
+  padding: 20px;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 20px;
+}
+.main-title {
+  font-size: 2.2rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.subtitle {
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: #555;
+}
+
+/* Shared dialog panel styles used via `panelClass: 'shared-dialog-panel'` */
+.shared-dialog-panel {
+  /* Apply visible panel styles to the overlay pane itself so there is
+     no extra inner panel inside the dialog. The overlay is the element
+     that receives `panelClass`, so styling it ensures a single container. */
+  padding: 0; /* inner container will not add extra padding */
+  border-radius: 12px;
+  box-sizing: border-box;
+  background: #ffffff;
+  max-width: 92vw;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  overflow: visible;
+}
+
+.shared-dialog-panel .mat-mdc-dialog-container {
+  /* Make the inner Angular Material dialog container transparent
+     so the overlay pane's background shows through — this removes
+     the visual 'double container' effect. */
+  background: transparent;
+  padding: 0;
+}
+
+/* Ensure primary button has expected appearance inside shared panel */
+.shared-dialog-panel .mat-mdc-dialog-container .primary-button {
+  min-width: 120px;
+  border-radius: 999px;
+  position: relative;
+  z-index: 2;
+}

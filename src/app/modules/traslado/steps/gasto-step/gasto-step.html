@@ -1,0 +1,51 @@
+<h3>Registro de Gasto</h3>
+
+<div
+  *ngFor="let fila of filas; let i = index"
+  [formGroup]="fila"
+  class="gasto-card">
+
+  <div class="card-header">
+    <span>Registro {{ i + 1 }}</span>
+    <button
+      mat-icon-button
+      color="warn"
+      type="button"
+      (click)="eliminar(i)"
+      [disabled]="gastos.length === 1">
+      🗑️
+    </button>
+  </div>
+
+  <div class="gasto-grid">
+    <mat-form-field appearance="outline" class="desc">
+      <mat-label>Descripción</mat-label>
+      <input matInput formControlName="descripcion">
+      <mat-error *ngIf="fila.get('descripcion')?.hasError('required')">
+        La descripción es requerida
+      </mat-error>
+      <mat-error *ngIf="fila.get('descripcion')?.hasError('minlength')">
+        La descripción debe tener al menos 3 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="cant">
+      <mat-label>Cantidad</mat-label>
+      <input matInput type="number" formControlName="cantidad">
+      <mat-error *ngIf="fila.get('cantidad')?.hasError('required')">
+        La cantidad es requerida
+      </mat-error>
+      <mat-error *ngIf="fila.get('cantidad')?.hasError('min')">
+        La cantidad debe ser mayor a 0
+      </mat-error>
+    </mat-form-field>
+  </div>
+</div>
+
+<button
+  mat-stroked-button
+  color="primary"
+  type="button"
+  (click)="agregar()">
+  ➕ Agregar gasto
+</button>
