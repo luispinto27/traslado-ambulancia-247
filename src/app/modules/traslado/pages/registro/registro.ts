@@ -1,5 +1,7 @@
 import { Component, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { timeout, catchError, finalize } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ServicioService, ServicioResponse } from '../../../../services/servicio.service';
@@ -560,23 +562,35 @@ import { SuccessDialog } from '../../components/success-dialog/success-dialog';
     onBuscarAutorizacion(autorizacion: string): void {
       this.isSearching = true;
       this.searchError = null;
-      this.servicioService.buscarServicio(autorizacion).subscribe({
-        next: (servicio: ServicioResponse) => {
+
+      this.servicioService.buscarServicio(autorizacion).pipe(
+        timeout(8000),
+        catchError((err: any) => throwError(() => err)),
+        finalize(() => {
           this.isSearching = false;
+        })
+      ).subscribe({
+        next: (servicio: ServicioResponse) => {
           this.searchError = null;
           this.llenarFormularioConServicio(servicio);
           this.searchLocked = true;
         },
         error: (err) => {
-          this.isSearching = false;
           this.searchLocked = false;
           const status = err?.status;
+
+          if (err?.name === 'TimeoutError') {
+            this.searchError = 'La consulta tardó demasiado. Intente de nuevo.';
+            return;
+          }
+
           if (status === 404) {
             this.searchError = 'No se encontró ningún servicio con ese número de autorización.';
           } else if (status === 401) {
             this.searchError = 'No autorizado. Por favor intente nuevamente o contacte al administrador.';
-          } else if (status === 0) {
-            this.searchError = 'No se pudo conectar con el servidor. Verifique su conexión.';
+          } else if (status === 0 || status === undefined) {
+            // status === 0 often indicates CORS or network failure
+            this.searchError = 'No se pudo conectar con el servidor. Verifique su conexión o la configuración CORS.';
           } else {
             this.searchError = 'Ocurrió un error al buscar el servicio. Intente de nuevo.';
           }
