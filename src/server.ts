@@ -12,17 +12,53 @@ const browserDistFolder = join(import.meta.dirname, '../browser');
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 
-/**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/{*splat}', (req, res) => {
- *   // Handle API request
- * });
- * ```
- */
+app.all('/index.php', async (req, res, next) => {
+  try {
+    const targetUrl = new URL(process.env['SERVICIO_PROXY_TARGET'] || 'https://ambulancia.urlcs.co/index.php');
+    targetUrl.pathname = req.path;
+    targetUrl.search = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+
+    const headers = { ...req.headers } as Record<string, string>;
+    delete headers['host'];
+    delete headers['connection'];
+    delete headers['content-length'];
+    delete headers['transfer-encoding'];
+
+    const body =
+      req.method === 'GET' || req.method === 'HEAD'
+        ? undefined
+        : await new Promise<string>((resolve, reject) => {
+            const chunks: Buffer[] = [];
+            req.on('data', (chunk) => chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk)));
+            req.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
+            req.on('error', reject);
+          });
+
+    const response = await fetch(targetUrl, {
+      method: req.method,
+      headers,
+      body,
+    });
+
+    res.status(response.status);
+
+    response.headers.forEach((value, key) => {
+      if (!['content-encoding', 'transfer-encoding', 'content-length', 'connection'].includes(key.toLowerCase())) {
+        res.setHeader(key, value);
+      }
+    });
+
+    if (req.method === 'HEAD') {
+      res.end();
+      return;
+    }
+
+    const text = await response.text();
+    res.send(text);
+  } catch (error) {
+    next(error);
+  }
+});
 
 /**
  * Serve static files from /browser
