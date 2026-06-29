@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -45,6 +45,8 @@ import { SuccessDialog } from '../../components/success-dialog/success-dialog';
 })
 
   export class Registro {
+
+    @Output() logout = new EventEmitter<void>();
 
     @ViewChild('stepper')
     stepper: any;
@@ -173,6 +175,10 @@ import { SuccessDialog } from '../../components/success-dialog/success-dialog';
       this.form.get('traslado.trasladoFallido')?.valueChanges.subscribe(trasladoFallido => {
         this.updateValidatorsBasedOnTrasladoFallido(trasladoFallido);
       });
+    }
+
+    protected onLogout(): void {
+      this.logout.emit();
     }
 
     private updateValidatorsBasedOnTrasladoFallido(trasladoFallido: boolean): void {

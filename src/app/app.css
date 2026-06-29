@@ -1,0 +1,114 @@
+.app-shell {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f9ff 0%, #eef4ff 100%);
+  color: #1f2a37;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  background: #ffffff;
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.08);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand img,
+.login-logo img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.brand p {
+  margin: 2px 0 0;
+  color: #5f6b7a;
+  font-size: 0.95rem;
+}
+
+.app-content {
+  padding: 32px 24px 48px;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 120px);
+}
+
+.login-card {
+  width: min(100%, 440px);
+  padding: 24px;
+  border-radius: 20px;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.14);
+}
+
+.login-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.login-card h2 {
+  margin: 0 0 8px;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.login-card p {
+  margin: 0 0 20px;
+  text-align: center;
+  color: #5f6b7a;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login-help {
+  font-size: 0.9rem;
+  margin: 4px 0 0;
+  color: #4b5563;
+}
+
+.login-error {
+  color: #b42318;
+  font-weight: 600;
+  margin: 8px 0 0;
+}
+
+.form-wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+@media (max-width: 640px) {
+  .app-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .app-content {
+    padding: 20px 16px 32px;
+  }
+
+  .login-card {
+    padding: 20px;
+  }
+}

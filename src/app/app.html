@@ -1,1 +1,47 @@
-<app-registro></app-registro>
+<div class="app-shell">
+  <header class="app-header" *ngIf="isAuthenticated()">
+    <div class="brand">
+      <img src="/logo-ambulancias-247.ico" alt="Logo Ambulancias 247" />
+      <div>
+        <h1>{{ title() }}</h1>
+        <p>Diligencia el formulario de traslado</p>
+      </div>
+    </div>
+    <button mat-stroked-button color="primary" type="button" (click)="logout()">
+      Cerrar sesión
+    </button>
+  </header>
+
+  <main class="app-content">
+    <section class="login-container" *ngIf="!isAuthenticated(); else formView">
+      <mat-card class="login-card">
+        <div class="login-logo">
+          <img src="/logo-ambulancias-247.ico" alt="Logo Ambulancias 247" />
+        </div>
+        <h2>Iniciar sesión</h2>
+        <p>Accede para completar el formulario de traslado.</p>
+
+        <form class="login-form" (ngSubmit)="login()">
+          <mat-form-field appearance="outline">
+            <mat-label>Usuario</mat-label>
+            <input matInput id="username" name="username" [(ngModel)]="username" required />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input matInput id="password" name="password" type="password" [(ngModel)]="password" required />
+          </mat-form-field>
+
+          <p class="login-error" *ngIf="loginError">{{ loginError }}</p>
+          <button mat-raised-button color="primary" type="submit">Acceder</button>
+        </form>
+      </mat-card>
+    </section>
+
+    <ng-template #formView>
+      <div class="form-wrapper">
+        <app-registro (logout)="logout()"></app-registro>
+      </div>
+    </ng-template>
+  </main>
+</div>
